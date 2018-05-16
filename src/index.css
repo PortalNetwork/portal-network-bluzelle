@@ -3,3 +3,24 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+
+form {
+  display: inline-block;
+}
+.form-group {
+  text-align: center;
+  padding-bottom: 25px;
+}
+#todo {
+  margin: 0 auto;
+  width: 500px;
+}
+
+a.close {
+float: right;
+}
+
+ul {
+  margin-bottom: 10px !important;
+}
