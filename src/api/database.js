@@ -2,8 +2,8 @@ import bluzelle from 'bluzelle';
 
 // The following two config parameters should be replaced 
 // to the workable bluzelle port and uuid.
-const bluzellePort = 'ws://13.78.131.94:51012';
-const UUID = '90731a8f-60d4-44b2-ac79-5a56493eeb78';
+const bluzellePort = process.env.SWARM_PORT;
+const UUID = process.env.UUID;
 
 bluzelle.connect(bluzellePort, UUID);
 
