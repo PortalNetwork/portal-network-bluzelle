@@ -19,7 +19,7 @@ This is a demo project showing how users can easily create, update, read, and de
 
 ### View Demo
 
-
+![Demo Gif](./img/demo.gif)
 
 ## Setup
 
