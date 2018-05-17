@@ -5,6 +5,11 @@
 
 This is a demo project showing how users can easily create, update, read, and delete todo items to decentralized database (Bluzelle).
 
+## View Demo
+Simple demo with this repo.
+
+![Demo Gif](./img/demo.gif)
+
 ## Technical Stack
 
 ### Frontend
@@ -16,11 +21,6 @@ This is a demo project showing how users can easily create, update, read, and de
 
 ### Swarm
 - SwarmDB
-
-## View Demo
-Simple demo with this repo.
-
-![Demo Gif](./img/demo.gif)
 
 ## Setup
 
