@@ -17,7 +17,8 @@ This is a demo project showing how users can easily create, update, read, and de
 ### Swarm
 - SwarmDB
 
-### View Demo
+## View Demo
+Simple demo with this repo.
 
 ![Demo Gif](./img/demo.gif)
 
