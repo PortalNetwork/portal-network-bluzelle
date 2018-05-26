@@ -5,6 +5,9 @@
 
 This is a demo project showing how users can easily create, update, read, and delete todo items to decentralized database (Bluzelle).
 
+## Architecture
+![Architecture](./img/architecture.png)
+
 ## View Demo
 Simple demo with this repo.
 

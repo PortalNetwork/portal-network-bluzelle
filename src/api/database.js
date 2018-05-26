@@ -54,3 +54,14 @@ export const remove = async (key) => {
     return error;
   }
 }
+
+export const keys = async () => {
+  try {
+    const result = await bluzelle.keys();
+    console.log('keys result : \n', result)
+    return result;
+  } catch (error) {
+    console.log('keys error: \n', error);
+    return error;
+  }
+}
