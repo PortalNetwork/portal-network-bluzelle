@@ -5,6 +5,10 @@
 
 This is a demo project showing how users can easily create, update, read, and delete todo items to decentralized database (Bluzelle).
 
+## Setup Bluzelle Swarm DB from Docker
+
+Docker install guide: [BLUZELLE.md](./BLUZELLE.md).
+
 ## Architecture
 ![Architecture](./img/Architecture.png)
 
@@ -31,8 +35,8 @@ Simple demo with this repo.
 
 Open `.env` to setup environment parameters
 ```
-export SWARM_PORT=
-export UUID= 
+export BLUZELLE_WEBSOCKET="ws://192.168.1.24:51010"
+export BLUZELLE_UUID="71e2cd35-b606-41e6-bb08-f20de30df76c"
 ```
 
 ```
