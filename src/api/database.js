@@ -2,66 +2,56 @@ import bluzelle from 'bluzelle';
 
 // The following two config parameters should be replaced 
 // to the workable bluzelle port and uuid.
-const bluzellePort = process.env.SWARM_PORT;
-const UUID = process.env.UUID;
+const bluzellePort = "ws://192.168.1.24:51010";
+const UUID = "71e2cd35-b606-41e6-bb08-f20de30df76c";
 
-bluzelle.connect(bluzellePort, UUID);
+// bluzelle.connect(bluzellePort, UUID);
 
-export const create = async (key, todoItems) => {
-  try {
-    if (key.length === 0) return {message: 'invalid key'}
-    const result = await bluzelle.create(key, todoItems)
-    console.log('create result : \n', result);
+export const create = (key, todoItems) => {
+  if (key.length === 0) return {message: 'invalid input'}
+  bluzelle.connect(bluzellePort, UUID);
+  bluzelle.create(key, todoItems).then((result) => {
+    console.log('result', result);
     return result;
-  } catch (error) {
-    console.log('create error : \n', error);
+  }, error => {
     return error;
-  }
+  });
 }
 
-export const read = async (key) => {
-  try {
-    if (key.length === 0) return {message: 'invalid key'}
-    const result = await bluzelle.read(key);
-    console.log('read result : \n', result)
+export const read = (key) => {
+  if (key.length === 0) return {message: 'invalid key'}
+  bluzelle.connect(bluzellePort, UUID);
+  bluzelle.read(key).then(result => { 
     return result;
-  } catch (error) {
-    console.log('read error : \n', error);
+  }, error => {
     return error;
-  }
+  });
+};
+
+export const update = (key, todoItems) => {
+  if (key.length === 0) return {message: 'invalid key'}
+  bluzelle.connect(bluzellePort, UUID);
+  bluzelle.update(key, todoItems).then(() => { 
+    return 'success';
+  }, error => {
+    return error;
+  });
 }
 
-export const update = async (key, todoItems) => {
-  try {
-    if (key.length === 0) return {message: 'invalid key'}
-    const result = await bluzelle.update(key, todoItems);
-    console.log('update result : \n', result)
-    return result;
-  } catch (error) {
-    console.log('update error : \n', error);
+export const remove = (key) => {
+  if (key.length === 0) return {message: 'invalid key'}
+  bluzelle.connect(bluzellePort, UUID);
+  bluzelle.remove(key).then(() => { 
+    return 'success';
+  }, error => {
     return error;
-  }
+  });
 }
 
-export const remove = async (key) => {
-  try {
-    if (key.length === 0) return {message: 'invalid key'}
-    const result = await bluzelle.remove(key);
-    console.log('remove result : \n', result)
-    return result;
-  } catch (error) {
-    console.log('remove error : \n', error);
+export const readKeys = () => {
+  bluzelle.keys().then(keys => {
+    return keys;
+  }, error => { 
     return error;
-  }
-}
-
-export const keys = async () => {
-  try {
-    const result = await bluzelle.keys();
-    console.log('keys result : \n', result)
-    return result;
-  } catch (error) {
-    console.log('keys error: \n', error);
-    return error;
-  }
-}
+  });
+};
