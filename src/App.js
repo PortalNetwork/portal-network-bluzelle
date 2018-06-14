@@ -8,25 +8,75 @@ import bluzelleDB from 'bluzelle';
 const bluzellePort = "ws://192.168.1.24:51010";
 const UUID = "71e2cd35-b606-41e6-bb08-f20de30df76c";
 
+const Item = (props) => (
+  <ul> 
+    <span onClick={() => props.handleToggle()}>{props.content}</span>
+    <a href='#' className='close' aria-hidden='true'
+      onClick={() => props.deleteItem(props.indexNum)}>&times;</a>
+  </ul>
+)
+
+const EditForm = (props) => (
+  <ul>
+    <form role="form">
+      <input 
+        type="text"
+        placeholder={props.content} 
+        name="editItem"
+        value={props.editItem}
+        onChange={props.handleInputChange} />
+    </form>
+    <button 
+      onClick={() => props.updateItem(props.indexNum, props.editItem)}
+      type="button"
+      className="btn btn btn-primary">
+      Edit
+    </button>
+  </ul>
+)
+
 class Task extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      editState: false
+      editState: false,
+      editItem: ''
     };
+
+    this.handleToggle = this.handleToggle.bind(this);
+    this.updateItem = this.updateItem.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
+  }
+
+  handleToggle() {
+    if (!this.state.editState) { this.setState({editState: true }) }
+  }
+
+  updateItem = (index, content) => {
+    let updateList = this.props.list;
+    updateList[index] = content;
+    
+    bluzelleDB.update(index, content);
+    this.props.setList(updateList);
+    this.setState({editState: false});
+  }
+
+  handleInputChange = (e) => {
+    const { name, value } = e.target;
+    this.setState({ [name]: value });
   }
 
   render() {
-    let Tmp = (
-      <ul> 
-        <span>{this.props.content}</span>
-        <a href='#' className='close' aria-hidden='true'
-          onClick={() => this.props.deleteItem(this.props.indexNum)}>&times;</a>
-      </ul>
-    )
-
-    return !this.state.editState ? <Tmp/> : <EditForm/>
+    return !this.state.editState ? 
+      <Item 
+        {...this.props} 
+        handleToggle={this.handleToggle} /> : 
+      <EditForm 
+        {...this.props} 
+        updateItem={this.updateItem}
+        handleInputChange={this.handleInputChange}
+        editItem={this.state.editItem} />
   }
 }
 
@@ -42,7 +92,7 @@ class App extends Component {
     this.handleClick = this.handleClick.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.deleteItem = this.deleteItem.bind(this);
-    this.updateItem = this.updateItem.bind(this);
+    this.setList = this.setList.bind(this);
     this.readAllKyes = this.readAllKyes.bind(this);
     this.readAllContent = this.readAllContent.bind(this);
   }
@@ -54,6 +104,10 @@ class App extends Component {
   componentDidMount() {
     const allContent = this.readAllContent();
     if (allContent) { this.setState({list: allContent}); }
+  }
+
+  setList = (newList) => {
+    this.setState({list: newList})
   }
 
   handleInputChange = (e) => {
@@ -85,14 +139,6 @@ class App extends Component {
     // remove todo data from bluzelle db
     bluzelleDB.remove(index);
     this.setState({list: removedList});
-  }
-
-  updateItem = (index, content) => {
-    let updateList = this.state.list;
-    updateList[index] = content;
-    
-    bluzelleDB.update(index, content);
-    this.ssetState({list: updateList});
   }
 
   readAllKyes = () => {
@@ -151,7 +197,8 @@ class App extends Component {
               content={data}
               key={index}
               indexNum={index}
-              handleInputChange={this.handleInputChange}
+              list={this.state.list}
+              setList={this.setList}
               deleteItem={this.deleteItem}
               updateItem={this.updateItem} />))}
         </ul>
